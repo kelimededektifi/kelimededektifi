@@ -1,0 +1,413 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    /* Derin Siyah ve Gece Mavisi Geçişi */
+    background: radial-gradient(circle at center, #0b0e14 0%, #000000 100%);
+    background-attachment: fixed;
+    height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Çafçaflı Hareketli Neon Izgara */
+body::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    /* Izgara deseni oluşturma (Mavi çizgiler) */
+    background-image: 
+        linear-gradient(rgba(0, 198, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 198, 255, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    background-position: center center;
+    z-index: -1; /* İçeriğin arkasında kalması için */
+    /* Izgarayı perspektifle yatırma */
+    transform: perspective(500px) rotateX(60deg) translateY(-100px) scale(3);
+    animation: gridMove 20s linear infinite;
+}
+
+@keyframes gridMove {
+    from { background-position: 0 0; }
+    to { background-position: 0 500px; }
+}
+
+/* Köşelere Neon Mavi Işıma */
+body::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: radial-gradient(circle at 10% 10%, rgba(0, 198, 255, 0.15), transparent 40%),
+                radial-gradient(circle at 90% 90%, rgba(0, 114, 255, 0.15), transparent 40%);
+    z-index: -1;
+    pointer-events: none;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 35px;
+    padding: 40px;
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5);
+    width: 95%;
+    max-width: 600px;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.2rem;
+    margin-bottom: 25px;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.info {
+    display: flex;
+    justify-content: space-around;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 15px;
+    border-radius: 20px; /* Daha yuvarlak yaptık */
+    margin-bottom: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.selector-title {
+    font-size: 0.9rem;
+    color: #00c6ff;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.avatar-selector {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 30px;
+}
+
+.avatar {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 10px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.avatar-icon { font-size: 2rem; margin-bottom: 5px; }
+.avatar small { color: rgba(255,255,255,0.6); font-size: 0.7rem; }
+.avatar:hover { background: rgba(255,255,255,0.15); }
+
+.avatar.active {
+    border-color: #00c6ff;
+    background: rgba(0, 198, 255, 0.15);
+    box-shadow: 0 0 15px rgba(0, 198, 255, 0.4);
+    transform: translateY(-5px);
+}
+
+.input-group {
+    position: relative;
+    margin: 0 auto 30px auto;
+    width: 80%;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 20px;
+    background: rgba(0, 0, 0, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50px;
+    color: white;
+    text-align: center;
+    outline: none;
+    font-family: inherit;
+}
+
+.input-group label {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    transition: 0.3s;
+    opacity: 0.6;
+}
+
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label {
+    top: -15px;
+    font-size: 0.8rem;
+    opacity: 1;
+    color: #00c6ff;
+}
+
+button {
+    padding: 12px 25px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: 0.3s;
+    color: white;
+}
+
+button:active { transform: scale(0.95); }
+
+#startBtn { background: linear-gradient(45deg, #00c6ff, #0072ff); }
+#howBtn { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); }
+#guessBtn { background: #082858; }
+#hintBtn { background: #630b10; }
+#timeBtn { background: #37044b; } /* Mor tema süreyi temsil etsin */
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap; /* Mobilde butonların taşmaması için */
+    margin-bottom: 20px;
+}
+
+/* Süre eklendiğinde sayaç parlaması */
+@keyframes timerSuccess {
+    0% { transform: scale(1); color: #2ecc71; }
+    50% { transform: scale(1.3); color: #2ecc71; text-shadow: 0 0 15px #2ecc71; }
+    100% { transform: scale(1); color: white; }
+}
+.timer-animate { animation: timerSuccess 0.6s ease; }
+#grid { display: flex; flex-direction: column; gap: 8px; margin-top: 20px; }
+.row { display: flex; justify-content: center; gap: 8px; }
+
+.box {
+    width: 45px; height: 45px;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; font-weight: bold;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --- ANİMASYON CLASSLARI --- */
+@keyframes pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.15); border-color: #00c6ff; }
+    100% { transform: scale(1); }
+}
+.pop-effect { animation: pop 0.15s ease-out; }
+
+@keyframes dance {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+.dance { animation: dance 0.5s ease-in-out; }
+
+@keyframes flip {
+    0% { transform: rotateX(0); }
+    50% { transform: rotateX(90deg); opacity: 0.5; }
+    100% { transform: rotateX(0); }
+}
+.flip { animation: flip 0.5s ease-in-out; }
+
+@keyframes shake {
+    10%, 90% { transform: translate3d(-1px, 0, 0); }
+    20%, 80% { transform: translate3d(2px, 0, 0); }
+    30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+    40%, 60% { transform: translate3d(4px, 0, 0); }
+}
+.shake { animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both; }
+
+.correct { background: #2ecc71; border-color: #2ecc71; }
+.present { background: #f1c40f; border-color: #f1c40f; }
+.wrong { background: #34495e; border-color: #34495e; opacity: 0.6; }
+
+/* Arka planı tamamen karartma ve odaklanma */
+.game-over {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(15px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    animation: fadeIn 0.5s ease;
+}
+
+/* Ana Panel: Neon Dosya Görünümü */
+.game-over-box {
+    background: #111;
+    padding: 50px;
+    border-radius: 20px;
+    text-align: center;
+    border: 2px solid #00c6ff;
+    box-shadow: 0 0 30px rgba(0, 198, 255, 0.4), inset 0 0 15px rgba(0, 198, 255, 0.1);
+    position: relative;
+    max-width: 450px;
+    width: 90%;
+    overflow: hidden;
+}
+
+/* Polis Bandı Dekoru */
+.game-over-box::before {
+    content: "POLICE LINE - DO NOT CROSS - POLICE LINE";
+    position: absolute;
+    top: 15px; left: -50px;
+    background: #fdbb2d;
+    color: #000;
+    font-size: 0.7rem;
+    font-weight: 900;
+    padding: 5px 100px;
+    transform: rotate(-30deg);
+    box-shadow: 0 0 10px rgba(253, 187, 45, 0.5);
+    white-space: nowrap;
+}
+
+/* Başlık: Ölümcül Neon */
+#gameOverTitle {
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+    color: #ff4d4d;
+    text-shadow: 0 0 15px #ff4d4d;
+    letter-spacing: 2px;
+}
+
+/* İçerik Yazıları */
+#gameOverText {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 25px;
+    color: #eee;
+}
+
+/* Aranan Kelime: Neon Vurgu */
+.reveal-word {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 10px 20px;
+    margin: 15px 0;
+    border: 1px dashed #f1c40f;
+    border-radius: 8px;
+    font-size: 2rem;
+    color: #f1c40f;
+    text-shadow: 0 0 10px #f1c40f;
+    font-weight: 800;
+    letter-spacing: 4px;
+}
+
+/* Tekrar Dene Butonu */
+.game-over-box button {
+    background: transparent;
+    border: 2px solid #00c6ff;
+    color: #00c6ff;
+    padding: 12px 40px;
+    font-size: 1.1rem;
+    text-shadow: 0 0 5px #00c6ff;
+    box-shadow: 0 0 15px rgba(0, 198, 255, 0.2);
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.game-over-box button:hover {
+    background: #00c6ff;
+    color: #000;
+    box-shadow: 0 0 30px #00c6ff;
+    transform: scale(1.05);
+}
+.hidden { display: none !important; }
+/* Çafçaflı Uyarı Kutusu */
+.toast-error {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.5);
+    background: rgba(178, 31, 31, 0.9); /* Kan kırmızısı/Dedektif teması */
+    color: white;
+    padding: 20px 40px;
+    border-radius: 15px;
+    font-weight: 800;
+    font-size: 1.5rem;
+    box-shadow: 0 0 30px rgba(0,0,0,0.8), 0 0 15px rgba(178, 31, 31, 0.5);
+    z-index: 1000;
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    pointer-events: none;
+    border: 3px solid #fdbb2d;
+    text-transform: uppercase;
+}
+
+.toast-error.show {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* Ekranı karartma efekti */
+.screen-shake-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(178, 31, 31, 0.2);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 998;
+    transition: opacity 0.2s;
+}
+
+.screen-shake-overlay.active {
+    opacity: 1;
+}
+/* Puanın uçup gitme efekti */
+.score-minus {
+    position: absolute;
+    color: #ff4d4d;
+    font-weight: 800;
+    font-size: 1.2rem;
+    animation: floatUp 1s ease-out forwards;
+    pointer-events: none;
+    text-shadow: 0 0 10px #ff0000;
+    z-index: 2000;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(40px); opacity: 0; }
+}
+
+/* Harf geldiğinde kutunun içindeki neon patlaması */
+.hint-flash {
+    animation: hintGlow 0.8s ease-out;
+}
+
+@keyframes hintGlow {
+    0% { box-shadow: 0 0 0px #fff; background: #fff; }
+    20% { box-shadow: 0 0 40px #00c6ff, 0 0 80px #00c6ff; background: #00c6ff; }
+    100% { box-shadow: 0 0 20px #00c6ff; background: rgba(0, 0, 0, 0.3); }
+}
+
+/* Ekran kenarı parlaması */
+.hint-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    box-shadow: inset 0 0 100px rgba(241, 196, 15, 0.3);
+    pointer-events: none;
+    opacity: 0;
+    z-index: 1500;
+    transition: opacity 0.3s;
+}
+.hint-overlay.active { opacity: 1; }
