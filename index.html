@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelime Dedektifi | Pro Edition</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container">
+        <h1>🕵️‍♂️ KELİME DEDEKTİFİ</h1>
+
+        <div class="info">
+            <div>Seviye: <span id="level">4</span></div>
+            <div>Puan: <span id="score">0</span></div>
+            <div>Rekor: <span id="bestScore">0</span></div> 
+            <div>Süre: <span id="timer"></span></div>
+        </div>
+
+        <div class="menu">
+            <div class="avatar-container">
+                <p class="selector-title">Karakterini Seç:</p>
+                <div class="avatar-selector">
+                    <div class="avatar active" onclick="selectAvatar('🕵️‍♂️', this)">
+                        <div class="avatar-icon">🕵️‍♂️</div>
+                        <small>Usta</small>
+                    </div>
+                    <div class="avatar" onclick="selectAvatar('🕵️‍♀️', this)">
+                        <div class="avatar-icon">🕵️‍♀️</div>
+                        <small>Asistan</small>
+                    </div>
+                    <div class="avatar" onclick="selectAvatar('🧐', this)">
+                        <div class="avatar-icon">🧐</div>
+                        <small>Meraklı</small>
+                    </div>
+                    <div class="avatar" onclick="selectAvatar('😎', this)">
+                        <div class="avatar-icon">😎</div>
+                        <small>Havalı</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <input type="text" id="username" placeholder=" " autocomplete="off">
+                <label id="inputLabel">Dedektif İsmi...</label>
+            </div>
+
+            <div class="menu-action-buttons">
+                <button id="startBtn">🎮 Başla</button>
+                <button id="howBtn" type="button">❓ Yardım</button>
+            </div>
+        </div>
+
+        <div class="buttons" style="display:none;">
+            <button id="guessBtn">✔ Tahmin Et</button>
+            <button id="hintBtn">💡 Harf Al (-20)</button>
+            <button id="timeBtn">⏳ Süre Ekle (-30)</button>
+        </div>
+
+        <div id="grid"></div>
+        <div id="message"></div>
+
+        <div id="howPopup" class="game-over hidden">
+            <div class="game-over-box">
+                <h2>❓ Nasıl Oynanır?</h2>
+                <p>Doğru harf doğru yerdeyse <b>Yeşil</b>, harf var ama yeri yanlışsa <b>Sarı</b> yanar.</p>
+                <button onclick="closeHow()">Anladım</button>
+            </div>
+        </div>
+
+        <div id="gameOver" class="game-over hidden">
+            <div class="game-over-box">
+                <h2 id="gameOverTitle">Oyun Bitti</h2>
+                <p id="gameOverText"></p>
+                <button onclick="location.reload()">🔄 Tekrar Dene</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="script.js"></script>
+    <!-- Yetersiz Puan Pop-up -->
+
+<div id="puanHataPopup" class="game-over hidden">
+    <div class="game-over-box" style="border-color: #ff4d4d; box-shadow: 0 0 30px rgba(255, 77, 77, 0.4);">
+        <h2 style="color: #ff4d4d; text-shadow: 0 0 15px #ff4d4d;">🕵️‍♂️ PUAN YETERSİZ!</h2>
+        <p>İpucu almak için yeterli puanın yok. Daha fazla kelime çözerek puan toplamalısın!</p>
+        <!-- Butona onclick eklemeyi unutma -->
+        <button onclick="closePuanPopup()">ANLADIM</button>
+    </div>
+</body>
+</html>
